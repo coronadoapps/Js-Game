@@ -40,7 +40,7 @@ window.onload = function() {
           this.x = x;
           this.y = y;
         }
-        //
+        //methods
         Draw(width, height){
             ctx.beginPath();
             ctx.rect(this.x,this.y,width,height);
