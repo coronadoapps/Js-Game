@@ -5,9 +5,10 @@ let x1=0;
 let x2;
 let dx = 4;
 let posX, posY;
-let velocity = 3;
+let velocity = 2;
 let asteroids = [];
 let points = 0;
+let probability = 0;
 
 class Asteroid{
    
@@ -36,17 +37,17 @@ class Asteroid{
 
 function setup() {
   createCanvas(800, 450); //16:9
+  background(0);
   x2 = width;
-  
 }
 
 function draw() {
    document.getElementById("score").innerHTML = "SCORE: " + points;
-  if(random(1) < 0.01){
+  
+  if(random(1) < 0.05){
     asteroids.push(new Asteroid());
   }
     
-  background(0);
   image(bg,x1,0,width,height);
   image(bg,x2,0,width,height);
   x1 -= dx;
@@ -64,22 +65,19 @@ function draw() {
   for(let a of asteroids){
     a.move();
     a.show();
-   
     
     if(collideCircleCircle(mouseX, mouseY, ufo.width-10,a.x+asteroid.width/2,a.y+asteroid.width/2,asteroid.width+1)){
-      noLoop();
-      button = createButton('RESTART');
-       button.position(width/2, height/2);
-       button.mousePressed(restart);
-
+         noLoop();
+         image(explosion,mouseX-ufo.width/2,mouseY-ufo.height/2);
+         button = createButton('PLAY AGAIN');
+         button.position(width/2 - button.width/2, height/2 - button.height/2);
+         button.mousePressed(restart);
     }
      
     if(a.y+asteroid.width/2 < 0 && a.x+asteroid.width/2 < width && a.x+asteroid.width/2 > 0){
       points++;
     }
-    
   }
-    
 }
 
 function randomColor(){
@@ -90,6 +88,7 @@ function preload() {
   bg = loadImage('bg.jpeg');
   ufo = loadImage('ufo.png');
   asteroid = loadImage('asteroidx40.png');
+  explosion = loadImage('explosion.png');
 }
 
 function restart() {
